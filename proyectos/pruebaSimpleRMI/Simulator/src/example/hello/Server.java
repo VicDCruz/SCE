@@ -25,14 +25,14 @@ public class Server implements Hola {
     { 
         cuantos++;
         System.out.println("Proporcionando el servicio no. " + cuantos);
-		// getDeltaT();
+		getDeltaT();
         return "Servicio no. " + cuantos + " proporcionado desde " + strHostname;
     }
 
     public synchronized long sumaRemota( long a, long b)
 	{
        long c = a + b;
-	   // getDeltaT();
+	   getDeltaT();
 	   return c;
 	}
 

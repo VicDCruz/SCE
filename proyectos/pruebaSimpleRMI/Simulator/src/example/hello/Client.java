@@ -67,7 +67,6 @@ public class Client {
         long output = (long) 0.0;
         long x, y, z, zStub;
         long errores = 0;
-        // String response;
         String host = (args.length < 1) ? null : args[0];
         long N = (args.length < 2) ? 500 : Long.parseLong(args[1]);
         try {
@@ -76,14 +75,13 @@ public class Client {
             long start = System.currentTimeMillis();
             int service = (int) Math.floor(Math.random() * 5);
             for (int i = 0; i < N; i++) {
-                // response = stub.sayHello();
+                System.out.println("response: " + stub.sayHello());
                 x = (long) (10000.0 * Math.random());
                 y = (long) (10000.0 * Math.random());
                 z = Client.getOperation(x, y, service);
                 zStub = Client.getStub(stub, x, y, service);
                 if (z != zStub)
                     errores++;
-                // System.out.println("response: " + response);
                 service = (int) Math.floor(Math.random() * 5);
             }
             if (errores == 0)
