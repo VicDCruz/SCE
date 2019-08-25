@@ -63,8 +63,8 @@ public class Client {
         return output;
     }
 
-    public static long runServices() {
-        long output = 0.0;
+    public static long runServices(String[] args) {
+        long output = (long) 0.0;
         long x, y, z, zStub;
         long errores = 0;
         // String response;
@@ -91,7 +91,7 @@ public class Client {
             else
                 System.out.println("OCURRIERON " + errores + " ERRORES");
             long end = System.currentTimeMillis();
-            output = (end - start) / (N + 0.0);
+            output = (long) ((end - start) / (N + 0.0));
             System.out.println("Tardo " + ((end - start) * 0.001) + " seg");
             System.out.println("Media: " + output + " mSeg");
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class Client {
     public static void main(String[] args) {
         int repeat = 20;
         for (int i = 0; i < repeat; i++) {
-            Client.runServices();
+            Client.runServices(args);
         }
     }
 }
