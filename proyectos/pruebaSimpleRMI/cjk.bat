@@ -1,1 +1,1 @@
-C:\Users\vicda\Documents\SCE\proyectos\pruebaSimpleRMI
+cd C:\Users\vicda\Documents\SCE\proyectos\pruebaSimpleRMI

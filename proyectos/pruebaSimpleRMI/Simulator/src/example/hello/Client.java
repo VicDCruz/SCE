@@ -63,11 +63,12 @@ public class Client {
         return output;
     }
 
-    public static long runServices(String[] args) {
-        long output = (long) 0.0;
+    public static double runServices(String[] args) {
+        double output = 0.0;
         long x, y, z, zStub;
         long errores = 0;
         String host = (args.length < 1) ? null : args[0];
+        String response;
         long N = (args.length < 2) ? 500 : Long.parseLong(args[1]);
         try {
             Registry registry = LocateRegistry.getRegistry(host);
@@ -75,7 +76,8 @@ public class Client {
             long start = System.currentTimeMillis();
             int service = (int) Math.floor(Math.random() * 5);
             for (int i = 0; i < N; i++) {
-                System.out.println("response: " + stub.sayHello());
+                // response = stub.sayHello();
+                // System.out.println("response: " + response);
                 x = (long) (10000.0 * Math.random());
                 y = (long) (10000.0 * Math.random());
                 z = Client.getOperation(x, y, service);
@@ -89,9 +91,8 @@ public class Client {
             else
                 System.out.println("OCURRIERON " + errores + " ERRORES");
             long end = System.currentTimeMillis();
-            output = (long) ((end - start) / (N + 0.0));
+            output = (end - start) / (N + 0.0);
             System.out.println("Tardo " + ((end - start) * 0.001) + " seg");
-            System.out.println("Media: " + output + " mSeg");
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
@@ -100,9 +101,28 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        int repeat = 20;
+        int repeat = 30;
+        double mean;
+        double meanTotal = 0, stdDeviation = 0, cuadraticSum = 0;
+        System.out.println("=== Iniciando proceso ===");
         for (int i = 0; i < repeat; i++) {
-            Client.runServices(args);
+            mean = Client.runServices(args);
+            System.out.println("Media: " + mean + " mSeg");
+            meanTotal = Client.setMean(meanTotal, mean, i);
+            stdDeviation = Client.setSD(stdDeviation, mean, meanTotal, cuadraticSum, i + 1);
         }
+        System.out.println("=== Resumen ===");
+        System.out.println("Media total: " + meanTotal + " mSeg");
+        System.out.println("Desv Std: " + stdDeviation + " mSeg");
+        System.out.println("=== Finalizado ===");
+    }
+
+    private static double setSD(double stdDeviation, double x, double meanTotal, double cuadraticSum, int N) {
+        cuadraticSum += Math.pow(x - meanTotal, 2);
+        return Math.sqrt(cuadraticSum / N);
+    }
+
+    private static double setMean(double meanTotal, double mean, int count) {
+        return (((meanTotal * count) + mean) / (count + 1));
     }
 }

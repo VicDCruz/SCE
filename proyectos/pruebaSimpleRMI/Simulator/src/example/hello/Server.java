@@ -11,7 +11,7 @@ public class Server implements Hola {
     public Server() {}
 	
 	public void getDeltaT() {
-		long deltaT = (long) (-mu * Math.log(Math.random()));
+        long deltaT = (long) Math.ceil(-mu * Math.log(Math.random()) * ((long) 1.0));
 		try {
 			Thread.currentThread().sleep(deltaT);
 		} catch (Exception e)
