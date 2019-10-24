@@ -1,3 +1,2 @@
-cd E:\SCE\pruebaRMI\
-
+cd C:\Users\vicda\Documents\SCE\pruebaRMI\
 

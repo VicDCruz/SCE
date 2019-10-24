@@ -21,7 +21,7 @@ public class Client
        long i,n,t0,t1,dt;
        int response;
        
-       n = 1000;
+       n = (args.length < 2) ? 1000 : Integer.parseInt(args[1]);
        
        try 
         {
