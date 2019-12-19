@@ -85,5 +85,45 @@
                 <component-name>sun-scheduler-binding</component-name>
             </target>
         </service-unit>
+        <service-unit>
+            <identification>
+                <name>AplicacionTuLibroOnline-sun-webspheremq-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-webspheremq-binding.jar</artifacts-zip>
+                <component-name>sun-webspheremq-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>AplicacionTuLibroOnline-sun-hl7-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-hl7-binding.jar</artifacts-zip>
+                <component-name>sun-hl7-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>AplicacionTuLibroOnline-sun-email-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-email-binding.jar</artifacts-zip>
+                <component-name>sun-email-binding</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>AplicacionTuLibroOnline-sun-rest-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-rest-binding.jar</artifacts-zip>
+                <component-name>sun-rest-binding</component-name>
+            </target>
+        </service-unit>
     </service-assembly>
 </jbi>

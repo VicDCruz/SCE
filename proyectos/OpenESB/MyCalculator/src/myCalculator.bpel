@@ -15,12 +15,15 @@
         <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" partnerLinkType="tns:myCalculator" myRole="myCalculatorPortTypeRole"/>
     </partnerLinks>
     <variables>
+        <variable name="Fault2FaultVar" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationFault"/>
         <variable name="Fault1FaultVar" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationFault"/>
         <variable name="DivisionOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationResponse"/>
         <variable name="DivisionOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationRequest"/>
+        <variable name="ModuloOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationResponse"/>
         <variable name="MultiplicationOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationResponse"/>
         <variable name="SubtractionOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationResponse"/>
         <variable name="AdditionOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationResponse"/>
+        <variable name="ModuloOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationRequest"/>
         <variable name="MultiplicationOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationRequest"/>
         <variable name="SubtractionOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationRequest"/>
         <variable name="AdditionOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" messageType="tns:operationRequest"/>
@@ -60,27 +63,54 @@
                     <reply name="Reply3" partnerLink="PartnerLink1" operation="multiplicationOperation" portType="tns:myCalculatorPortType" variable="MultiplicationOperationOut"/>
                 </sequence>
             </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="moduloOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" portType="tns:myCalculatorPortType" variable="ModuloOperationIn">
+                <sequence name="Sequence4">
+                    <if name="If2">
+                        <condition>$ModuloOperationIn.part1/ns0:param02 != 0</condition>
+                        <sequence name="Sequence7">
+                            <assign name="Assign4">
+                                <copy>
+                                    <from>$ModuloOperationIn.part1/ns0:param01 mod $ModuloOperationIn.part1/ns0:param02</from>
+                                        <to>$ModuloOperationOut.part1/ns0:response01</to>
+                                </copy>
+                            </assign>
+                            <reply name="Reply4" partnerLink="PartnerLink1" operation="moduloOperation" portType="tns:myCalculatorPortType" variable="ModuloOperationOut"/>
+                        </sequence>
+                        <else>
+                            <sequence name="Sequence8">
+                                <assign name="Assign7">
+                                    <copy>
+                                        <from>'Modulo no puede dividirse entre 0'</from>
+                                        <to>$Fault2FaultVar.part1/ns0:faultDetail</to>
+                                    </copy>
+                                </assign>
+                                <reply name="Reply7" partnerLink="PartnerLink1" operation="moduloOperation" portType="tns:myCalculatorPortType" faultName="tns:fault2" variable="Fault2FaultVar"/>
+                            </sequence>
+                        </else>
+                    </if>
+                </sequence>
+            </onMessage>
             <onMessage partnerLink="PartnerLink1" operation="divisionOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/MyCalculator/src/myCalculator" portType="tns:myCalculatorPortType" variable="DivisionOperationIn">
                 <if name="If1">
                     <condition>$DivisionOperationIn.part1/ns0:param02 != 0</condition>
-                    <sequence name="Sequence4">
-                        <assign name="Assign4">
+                    <sequence name="Sequence5">
+                        <assign name="Assign5">
                             <copy>
                                 <from>$DivisionOperationIn.part1/ns0:param01 div $DivisionOperationIn.part1/ns0:param02</from>
                                 <to>$DivisionOperationOut.part1/ns0:response01</to>
                             </copy>
                         </assign>
-                        <reply name="Reply4" partnerLink="PartnerLink1" operation="divisionOperation" portType="tns:myCalculatorPortType" variable="DivisionOperationOut"/>
+                        <reply name="Reply5" partnerLink="PartnerLink1" operation="divisionOperation" portType="tns:myCalculatorPortType" variable="DivisionOperationOut"/>
                     </sequence>
                     <else>
-                        <sequence name="Sequence5">
-                            <assign name="Assign5">
+                        <sequence name="Sequence6">
+                            <assign name="Assign6">
                                 <copy>
-                                    <from>'El denominador no puede ser 0'</from>
+                                    <from>'No puede dividir entre 0'</from>
                                     <to>$Fault1FaultVar.part1/ns0:faultDetail</to>
                                 </copy>
                             </assign>
-                            <reply name="Reply5" partnerLink="PartnerLink1" operation="divisionOperation" portType="tns:myCalculatorPortType" faultName="tns:fault1" variable="Fault1FaultVar"/>
+                            <reply name="Reply6" partnerLink="PartnerLink1" operation="divisionOperation" portType="tns:myCalculatorPortType" faultName="tns:fault2" variable="Fault1FaultVar"/>
                         </sequence>
                     </else>
                 </if>

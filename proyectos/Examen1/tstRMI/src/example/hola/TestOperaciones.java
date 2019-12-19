@@ -5,6 +5,8 @@
  */
 package example.hola;
 
+import example.hi.OperationFault;
+import example.hi.OutputComplexType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,13 +23,13 @@ public class TestOperaciones {
     }
 
     public static double doRequest() {
-        example.hello.MycalculatorCAService1 service
-                = new example.hello.MycalculatorCAService1();
-        example.hello.MyCalculatorPortType port = service.getCasaPort1();
-        example.hello.InputComplexType input;
-        example.hello.OutputComplextype output = null;
+        example.hi.CalculatorCAService1 service
+                = new example.hi.CalculatorCAService1();
+        example.hi.MyCalculatorPortType port = service.getCasaPort1();
+        example.hi.InputComplexType input;
+        example.hi.OutputComplexType output = null;
 
-        input = new example.hello.InputComplexType();
+        input = new example.hi.InputComplexType();
         input.setParam01((int) (Math.random() * 20));
         // input.setParam02((int) (Math.random() * 20));
         input.setParam02(0);
@@ -44,7 +46,7 @@ public class TestOperaciones {
             case 4: {
                 try {
                     output = divisionOperation(input, port);
-                } catch (example.hello.OperationFault ex) {
+                } catch (example.hi.OperationFault ex) {
                     System.out.println(ex.getFaultInfo().getFaultDetail());
                     return 0;
                 }
@@ -57,31 +59,32 @@ public class TestOperaciones {
     }
 
     public static void main(String args[]) {
-        for (int i = 0; i < 10; i++)
-            System.out.println("Resultado " + TestOperaciones.doRequest());        
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Resultado " + TestOperaciones.doRequest());
+        }
     }
 
-    private static example.hello.OutputComplextype additionOperation(
-            example.hello.InputComplexType part1,
-            example.hello.MyCalculatorPortType port) {
+    private static example.hi.OutputComplexType additionOperation(
+            example.hi.InputComplexType part1,
+            example.hi.MyCalculatorPortType port) {
         return port.additionOperation(part1);
     }
 
-    private static example.hello.OutputComplextype divisionOperation(
-            example.hello.InputComplexType part1,
-            example.hello.MyCalculatorPortType port) throws example.hello.OperationFault {
+    private static example.hi.OutputComplexType divisionOperation(
+            example.hi.InputComplexType part1,
+            example.hi.MyCalculatorPortType port) throws example.hi.OperationFault {
         return port.divisionOperation(part1);
     }
 
-    private static example.hello.OutputComplextype multiplicationOperation(
-            example.hello.InputComplexType part1,
-            example.hello.MyCalculatorPortType port) {
+    private static example.hi.OutputComplexType multiplicationOperation(
+            example.hi.InputComplexType part1,
+            example.hi.MyCalculatorPortType port) {
         return port.multiplicationOperation(part1);
     }
 
-    private static example.hello.OutputComplextype subtractionOperation(
-            example.hello.InputComplexType part1,
-            example.hello.MyCalculatorPortType port) {
+    private static example.hi.OutputComplexType subtractionOperation(
+            example.hi.InputComplexType part1,
+            example.hi.MyCalculatorPortType port) {
         return port.subtractionOperation(part1);
     }
 }
